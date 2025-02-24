@@ -15,6 +15,7 @@ from langsmith import Client
 app = Flask(__name__)
 
 load_dotenv()
+
 # session generate key, global to generate once for session
 global session_hash
 session_hash = str(random.randint(1000000, 9999999))
@@ -25,12 +26,10 @@ history = UpstashRedisChatMessageHistory(
     url=os.getenv("URL"), token=os.getenv("TOKEN"), ttl=10000, session_id=(f"{session_hash}")
 )
 
-
 # for general history
 # history = UpstashRedisChatMessageHistory(
 #     url=os.getenv("URL"), token=os.getenv("TOKEN"), ttl=1000000000, session_id=("session")
 # )
-
 
 prompt_template = ChatPromptTemplate(
     [ # choose the system's attitude
