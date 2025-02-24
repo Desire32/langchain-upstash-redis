@@ -67,8 +67,6 @@ https://ollama.com/search
 ollama start # in separate console
 
 ollama pull <model_name>
-
-ollama serve
 ```
 
 2. Upstash Redis configuration
@@ -113,7 +111,13 @@ pip install -r requirements.txt
 
 ## Screenshots
 
+This is how it looks like in Upstash Redis, our dialog is being saved with custom ttl, in json format, and random session key:
 
+![Screenshot 2025-02-24 at 22 11 28](https://github.com/user-attachments/assets/be9b2028-f747-40b8-90dc-dfa0ddce7b41)
+
+Response speed depends on hardware specs, for example for RTX 30x series "hello" prompt would take 2 seconds max, but tests have been made on MacOS:
+
+![Screenshot 2025-02-24 at 22 10 15](https://github.com/user-attachments/assets/d029624d-3bd7-4cf9-ad61-d9d13bd3a55d)
 
 ## License
 
