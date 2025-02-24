@@ -4,17 +4,20 @@ Flask server for the custom LLM chatbot. The bot works with Ollama LLM (e.g. Mis
 
 ## How does it work?
 
+Session_hash is needed for random session key generation, every time we launch llm, we would have different sessions
 ```bash
 global session_hash
 session_hash = str(random.randint(1000000, 9999999))
 ```
 
+This is how we make a connection between llm and upstash redis, where we need to initialize our url-env and token-env
 ```bash
 history = UpstashRedisChatMessageHistory(
     url=os.getenv("URL"), token=os.getenv("TOKEN"), ttl=10000, session_id=(f"{session_hash}")
 )
 ```
 
+ChatPromptTemplate allows us to create an individual llm behavior, depends on your fantasy :)
 ```bash
 prompt_template = ChatPromptTemplate(
     [ # choose the system's attitude
@@ -29,6 +32,7 @@ prompt_template = ChatPromptTemplate(
 )
 ```
 
+Choose the model you have installed and attach it to the chain
 ```bash
 model = OllamaLLM(model="mistral:7b")
 chain = prompt_template | model
@@ -68,8 +72,13 @@ ollama pull <model_name>
 ollama serve
 ```
 
+2. Upstash Redis configuration
+Login into Upstash: https://console.upstash.com/
+Choose details and look for REST_API and copy next parameters:
+- UPSTASH_REDIS_REST_URL ( our "URL")
+- UPSTASH_REDIS_REST_TOKEN ( our "TOKEN")
 
-2. Clone the repo:
+3. Clone the repo:
 ```bash
    git clone https://github.com/Desire32/langchain-llm-research-paper.git
 
