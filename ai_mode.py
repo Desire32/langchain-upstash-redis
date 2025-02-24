@@ -11,9 +11,7 @@ import random
 
 
 from langsmith import Client
-
 app = Flask(__name__)
-
 load_dotenv()
 
 # session generate key, global to generate once for session
@@ -21,16 +19,25 @@ global session_hash
 session_hash = str(random.randint(1000000, 9999999))
 
 
-# for individual history
+##############
+# Two ways of storing information into Upstash Redis
+# Hint: if you want to increase TTL (time-to-leave), change the value "ttl=value"
+##############
+
+# Option 1:
+# We use a random generate key, which means every session is going to be different, if you reload the model, it won't remember you
 history = UpstashRedisChatMessageHistory(
     url=os.getenv("URL"), token=os.getenv("TOKEN"), ttl=10000, session_id=(f"{session_hash}")
 )
 
-# for general history
+# Option 2:
+# You can ignore key generation and send it directly into pre-setup key, for example "session", it is going to remember you, even though you relaunched it.
+#
 # history = UpstashRedisChatMessageHistory(
 #     url=os.getenv("URL"), token=os.getenv("TOKEN"), ttl=1000000000, session_id=("session")
 # )
 
+# Model behaviour
 prompt_template = ChatPromptTemplate(
     [ # choose the system's attitude
         (
@@ -43,14 +50,31 @@ prompt_template = ChatPromptTemplate(
     ]
 )
 
-callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
+# my favorite one
+# prompt_template = ChatPromptTemplate(
+#     [ # choose the system's attitude
+#         (
+#             "system",
+#             "You are the dude, the big lebovsky"
+#         ),
+#         MessagesPlaceholder(variable_name="chat_history"), # template
+#         ("human", "{input}"),
+        
+#     ]
+# )
+
+########
+#callback_manager is a chunk mode, its going to be showing response dinamically, not in json format
+########
+
+#callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
 #model = OllamaLLM(model="deepseek-r1:8b")
+#specific_chunks_model = OllamaLLM(model="llama3.2", callbacks=callback_manager)
+
+# choose the model and chain it
 model = OllamaLLM(model="mistral:7b")
-specific_chunks_model = OllamaLLM(model="llama3.2", callbacks=callback_manager)
 chain = prompt_template | model
 chat_history = history.messages
-
-# TODO chunks (optional)
 
 @app.route('/', methods=['POST'])
 def start_up():
