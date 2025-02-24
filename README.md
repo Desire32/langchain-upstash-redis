@@ -1,6 +1,6 @@
 ## What does it do?
 
-Flask server for the custom LLM chatbot. The bot works with Ollama LLM (e.g. Mistral 7B or Llama3) and uses Upstash Redis to store chat history.
+Flask server for the custom LLM chatbot. The bot works with Ollama LLM (e.g. Mistral 7B or whatever you decided to use) and uses Upstash Redis to store chat history.
 
 ## How does it work?
 
@@ -99,3 +99,12 @@ pip install -r requirements.txt
 - Upstash Redis
 - python-langchain
 - ollama engine
+
+
+## Screenshots
+
+
+
+## License
+
+The project is protected by MIT License.
