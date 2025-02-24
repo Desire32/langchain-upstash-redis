@@ -57,8 +57,7 @@ curl -fsSL https://ollama.com/install.sh | sh
 
 windows
 
-Download the installer from the official website: https://ollama.com/download
-Install Ollama by following the instructions.
+Download the Ollama from the official website: https://ollama.com/download
 
 Follow the link to select a model:
 
@@ -73,7 +72,9 @@ ollama serve
 ```
 
 2. Upstash Redis configuration
+   
 Login into Upstash: https://console.upstash.com/
+
 Choose details and look for REST_API and copy next parameters:
 - UPSTASH_REDIS_REST_URL ( our "URL")
 - UPSTASH_REDIS_REST_TOKEN ( our "TOKEN")
