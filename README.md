@@ -4,6 +4,37 @@ Flask server for the custom LLM chatbot. The bot works with Ollama LLM (e.g. Mis
 
 ## How does it work?
 
+```bash
+global session_hash
+session_hash = str(random.randint(1000000, 9999999))
+```
+
+```bash
+history = UpstashRedisChatMessageHistory(
+    url=os.getenv("URL"), token=os.getenv("TOKEN"), ttl=10000, session_id=(f"{session_hash}")
+)
+```
+
+```bash
+prompt_template = ChatPromptTemplate(
+    [ # choose the system's attitude
+        (
+            "system",
+            "You are helpful assistant from UCLan VR Museum, UCLan is the british university, abbreviature is University of Central Lancashire of Cyprus, your name is Martin"
+        ),
+        MessagesPlaceholder(variable_name="chat_history"), # template
+        ("human", "{input}"),
+        
+    ]
+)
+```
+
+```bash
+model = OllamaLLM(model="mistral:7b")
+chain = prompt_template | model
+chat_history = history.messages
+```
+
 ## How do i use it?
 
 1. Ollama installation:
@@ -57,6 +88,12 @@ Windows/Linux:
    venv\Scripts\activate
    pip install flask langchain langchain-core langchain-ollama langchain-community langsmith python-dotenv upstash-redis
 ```
+
+or simply use the requirements.txt:
+
+``
+pip install -r requirements.txt
+``
 
 ## Stack
 - Upstash Redis
