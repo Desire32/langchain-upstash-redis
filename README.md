@@ -1,16 +1,16 @@
 ## What does it do?
 
-Flask server for the custom LLM chatbot. The bot works with Ollama LLM (e.g. Mistral 7B or whatever you decided to use) and uses Upstash Redis to store chat history.
+Python-langchain based LLM chatbot. Works with Ollama LLM (e.g. Mistral 7B or whatever you decided to use) and uses Upstash Redis to store chat history.
 
 ## How does it work?
 
-Session_hash is needed for random session key generation, every time we launch llm, we would have different sessions
+Session_hash is needed for random session key generation, every time we launch llm, we would have different sessions:
 ```bash
 global session_hash
 session_hash = str(random.randint(1000000, 9999999))
 ```
 
-This is how we make a connection between llm and upstash redis, where we need to initialize our url-env and token-env
+This is how we make a connection between llm and upstash redis, where we need to initialize our url-env and token-env:
 ```bash
 history = UpstashRedisChatMessageHistory(
     url=os.getenv("URL"), token=os.getenv("TOKEN"), ttl=10000, session_id=(f"{session_hash}")
@@ -32,7 +32,7 @@ prompt_template = ChatPromptTemplate(
 )
 ```
 
-Choose the model you have installed and attach it to the chain
+Choose the model you have installed and attach it to the chain:
 ```bash
 model = OllamaLLM(model="mistral:7b")
 chain = prompt_template | model
@@ -103,11 +103,27 @@ or simply use the requirements.txt:
 pip install -r requirements.txt
 ``
 
+Start the bot:
+
+``
+python3 ai_mode.py
+``
+LLM bot is using simple flask server, if you want to change the port and host:
+
+```
+app.run(host="your-host", port="your-port", debug="True/False, if you want to use debug stuff")
+```
+
+In order to communicate with LLM, open the console (there supposed to be one window for ollama engine and one for communication) and use:
+
+``
+curl -X POST http://<your-address>/<your-port> -d "<your-message>"
+``
+
 ## Stack
 - Upstash Redis
 - python-langchain
 - ollama engine
-
 
 ## Screenshots
 
