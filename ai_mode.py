@@ -39,29 +39,16 @@ history = UpstashRedisChatMessageHistory(
 
 # Model behaviour
 prompt_template = ChatPromptTemplate(
-    [ # choose the system's attitude
+    [
         (
             "system",
-            "You are helpful assistant from UCLan VR Museum, UCLan is the british university, abbreviature is University of Central Lancashire of Cyprus, your name is Martin"
+            "You are helpful assistant, your name is Mike, you are an AI located on the moon"
         ),
         MessagesPlaceholder(variable_name="chat_history"), # template
         ("human", "{input}"),
         
     ]
 )
-
-# my favorite one
-# prompt_template = ChatPromptTemplate(
-#     [ # choose the system's attitude
-#         (
-#             "system",
-#             "You are the dude, the big lebovsky"
-#         ),
-#         MessagesPlaceholder(variable_name="chat_history"), # template
-#         ("human", "{input}"),
-        
-#     ]
-# )
 
 ########
 #callback_manager is a chunk mode, its going to be showing response dinamically, not in json format
