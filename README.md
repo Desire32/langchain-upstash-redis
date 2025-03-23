@@ -25,7 +25,7 @@ prompt_template = ChatPromptTemplate(
     [ # choose the system's attitude
         (
             "system",
-            "You are helpful assistant from UCLan VR Museum, UCLan is the british university, abbreviature is University of Central Lancashire of Cyprus, your name is Martin"
+            "You are helpful assistant"
         ),
         MessagesPlaceholder(variable_name="chat_history"), # template
         ("human", "{input}"),
@@ -78,13 +78,6 @@ Login into Upstash: https://console.upstash.com/
 Choose details and look for REST_API and copy next parameters:
 - UPSTASH_REDIS_REST_URL ( our "URL")
 - UPSTASH_REDIS_REST_TOKEN ( our "TOKEN")
-
-3. Clone the repo:
-```bash
-   git clone https://github.com/Desire32/langchain-llm-research-paper.git
-
-   cd langchain-llm-research-paper/
-```
 
 MacOS:
 ```bash
