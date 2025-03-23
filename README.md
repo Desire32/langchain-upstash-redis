@@ -2,8 +2,6 @@
   <img src="https://github.com/user-attachments/assets/8fe8b0b6-b66b-4649-bbae-2fa9b537af5f" alt="Frame 3" />
 </p>
 
-Python-langchain based LLM chatbot. Works with Ollama LLM (e.g. Mistral 7B or whatever you decided to use) and uses Upstash Redis to store chat history.
-
 ## Initialization
 
 Session_hash is needed for random session key generation, every time we launch llm, we would have different sessions:
