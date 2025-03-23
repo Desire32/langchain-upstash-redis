@@ -3,7 +3,7 @@ name: red-chain
 on:
   push:
     branches:
-    - main
+    - github-ci
   pull_request:
     branches:
     - main
