@@ -4,6 +4,8 @@
 
 # LangChain Chat with Upstash Redis and Ollama
 
+[![IEEE Publication](https://img.shields.io/badge/IEEE_Xplore-11126577-00629B?style=flat&logo=ieee&logoColor=white)](https://ieeexplore.ieee.org/abstract/document/11126577/)
+
 A powerful chat application that combines LangChain, Upstash Redis for message history storage, and Ollama for local LLM inference. This project demonstrates how to build a chat application with persistent memory using Redis and local LLM capabilities.
 
 ## Features
